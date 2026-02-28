@@ -778,6 +778,7 @@ protobuf {
     // for more information.
     generateProtoTasks {
         all().each { task ->
+            task.dependsOn('createBuildDir')
             task.builtins {
                 java {
                     option 'lite'
@@ -865,6 +866,7 @@ def safeArgsSrc = fileTree(layout.buildDirectory.dir("generated/source/navigatio
 }
 
 tasks.register("suppressUselessCastInSafeArgs") {
+    dependsOn('createBuildDir')
     inputs.files(safeArgsSrc)
     outputs.upToDateWhen { false }
 
