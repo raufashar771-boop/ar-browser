@@ -365,6 +365,7 @@ private fun OnboardingContent(
             }
         }
     }
+}
 
 @Composable
 private fun OnboardingBackground(isVisible: Boolean, isSolidBackground: Boolean) {
