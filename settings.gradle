@@ -14,7 +14,7 @@ pluginManagement {
         gradle.configureMavenRepositories(delegate)
     }
 
-    includeBuild("./gradle/plugins/conventions")
+    includeBuild("./plugins/conventions")
     includeBuild("./android-components/plugins/publicsuffixlist")
     includeBuild("./android-components/plugins/dependencies")
     includeBuild("./android-components/plugins/config")
