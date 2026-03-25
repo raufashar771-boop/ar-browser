@@ -231,6 +231,7 @@ def main(output, annotations_path):
     return {template_path}
 
 if __name__ == '__main__':
+    annotations_path = path.join(path.dirname(__file__), "CrashAnnotations.yaml")
     file_gen = 'android-components/components/lib/crash/src/main/java/mozilla/components/lib/crash/service/CrashReport.kt'
     with open(file_gen, 'w') as f:
-        emit_java(output=f)
+        main(output=f, annotations_path=annotations_path)
