@@ -15,6 +15,15 @@ gradle.ext.mozconfig.substs.ANDROID_BUILD_TOOLS_VERSION = "36.0.0" // build/moz.
 gradle.ext.mozconfig.topsrcdir = System.getProperty("user.dir")
 gradle.ext.mozconfig.topobjdir = System.getProperty("user.dir")
 
-gradle.ext.vcsHashFileContent = false
-
 gradle.startParameter.offline = false
+
+gradle.ext.configureMavenRepositories = { handler ->
+    gradle.mozconfig.substs.GRADLE_MAVEN_REPOSITORIES.each { repository ->
+        handler.maven {
+            url = repository
+            if (gradle.mozconfig.substs.ALLOW_INSECURE_GRADLE_REPOSITORIES) {
+                allowInsecureProtocol = true
+            }
+        }
+    }
+}
