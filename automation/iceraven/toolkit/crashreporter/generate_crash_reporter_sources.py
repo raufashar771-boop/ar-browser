@@ -195,7 +195,7 @@ def emit_java(annotations, output_name):
 
     enum = ",\n".join(
         f'/** {javadoc_sanitize(data["description"])} */\n{name}("{name}", "{data.get("scope", "client")}")'
-        for (name, data) in annotations
+        for (name, data) in annotations.items()
     )
 
     return {
