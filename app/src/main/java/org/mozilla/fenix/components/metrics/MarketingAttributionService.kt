@@ -46,6 +46,16 @@ class MarketingAttributionService(private val context: Context) {
         var response: String? = null
 
         @VisibleForTesting
+        internal fun isMetaAttribution(installReferrerResponse: String?): Boolean {
+            if (installReferrerResponse.isNullOrBlank()) {
+                return false
+            }
+
+            val utmParams = UTMParams.parseUTMParameters(installReferrerResponse)
+            return MetaParams.extractMetaAttribution(utmParams.content) != null
+        }
+
+        @VisibleForTesting
         internal suspend fun shouldShowMarketingOnboarding(
             installReferrerResponse: String?,
             distributionIdManager: DistributionIdManager,

@@ -129,6 +129,7 @@ fun OnboardingScreenRedesign(
         .observeAsComposableState { it.account != null }
     val widgetPinnedFlow: StateFlow<Boolean> = WidgetPinnedState.isPinned
     val isWidgetPinnedState by widgetPinnedFlow.collectAsState()
+    val isSetToDefault by components.appStore.observeAsComposableState { it.isDefaultBrowser }
     var lastSettledPage by remember { mutableIntStateOf(pagerState.settledPage) }
 
     LaunchedEffect(pagerState) {
@@ -161,22 +162,14 @@ fun OnboardingScreenRedesign(
 
     val hasScrolledToNextPage = remember { mutableStateOf(false) }
 
-    LaunchedEffect(isSignedIn.value, isWidgetPinnedState) {
-        val scrollToNextCardFromSignIn = isSignedIn.value?.let {
-            scrollToNextCardFromSignIn(
-                pagesToDisplay,
-                pagerState.currentPage,
-                it,
-            )
-        } ?: false
-
-        val scrollToNextCardFromAddWidget = scrollToNextCardFromAddWidget(
-            pagesToDisplay,
-            pagerState.currentPage,
-            isWidgetPinnedState,
+    LaunchedEffect(isSignedIn.value, isWidgetPinnedState, isSetToDefault) {
+        val scrollToNextCard = shouldLaunchEffectScrollToNextPage(
+            isSignedIn = isSignedIn,
+            isWidgetPinnedState = isWidgetPinnedState,
+            isSetToDefault = isSetToDefault,
+            pagesToDisplay = pagesToDisplay,
+            pagerState = pagerState,
         )
-
-        val scrollToNextCard = scrollToNextCardFromSignIn || scrollToNextCardFromAddWidget
 
         if (scrollToNextCard && !hasScrolledToNextPage.value) {
             scrollToNextPageOrDismiss()
@@ -194,8 +187,11 @@ fun OnboardingScreenRedesign(
         pagesToDisplay = pagesToDisplay,
         pagerState = pagerState,
         onMakeFirefoxDefaultClick = {
-            onMakeFirefoxDefaultClick()
-            scrollToNextPageOrDismiss()
+            setToDefaultClick(
+                isSetToDefault = isSetToDefault,
+                scrollToNextPageOrDismiss = scrollToNextPageOrDismiss,
+                onMakeFirefoxDefaultClick = onMakeFirefoxDefaultClick,
+            )
         },
         onMakeFirefoxDefaultSkipClick = {
             onSkipDefaultClick()
@@ -247,6 +243,51 @@ fun OnboardingScreenRedesign(
     )
 }
 
+private fun setToDefaultClick(
+    isSetToDefault: Boolean,
+    scrollToNextPageOrDismiss: () -> Unit,
+    onMakeFirefoxDefaultClick: () -> Unit,
+) {
+    if (isSetToDefault) {
+        scrollToNextPageOrDismiss()
+    } else {
+        onMakeFirefoxDefaultClick()
+    }
+}
+
+private fun shouldLaunchEffectScrollToNextPage(
+    isSignedIn: State<Boolean?>,
+    isWidgetPinnedState: Boolean,
+    isSetToDefault: Boolean,
+    pagesToDisplay: List<OnboardingPageUiData>,
+    pagerState: PagerState,
+): Boolean {
+    val scrollToNextCardFromSignIn = isSignedIn.value?.let {
+        scrollToNextCardFromSignIn(
+            pagesToDisplay,
+            pagerState.currentPage,
+            it,
+        )
+    } ?: false
+
+    val scrollToNextCardFromAddWidget = scrollToNextCardFromAddWidget(
+        pagesToDisplay,
+        pagerState.currentPage,
+        isWidgetPinnedState,
+    )
+
+    val scrollToNextCardFromSetToDefault = scrollToNextCardFromSetToDefault(
+        pagesToDisplay,
+        pagerState.currentPage,
+        isSetToDefault,
+    )
+
+    val scrollToNextCard =
+        scrollToNextCardFromSignIn || scrollToNextCardFromAddWidget || scrollToNextCardFromSetToDefault
+
+    return scrollToNextCard
+}
+
 private fun scrollToNextCardFromAddWidget(
     pagesToDisplay: List<OnboardingPageUiData>,
     currentPageIndex: Int,
@@ -267,6 +308,17 @@ private fun scrollToNextCardFromSignIn(
         pagesToDisplay.indexOfFirst { it.type == OnboardingPageUiData.Type.SYNC_SIGN_IN }
     val currentPageIsSignInPage = currentPageIndex == indexOfSignInPage
     return isSignedIn && currentPageIsSignInPage
+}
+
+private fun scrollToNextCardFromSetToDefault(
+    pagesToDisplay: List<OnboardingPageUiData>,
+    currentPageIndex: Int,
+    isSetToDefault: Boolean,
+): Boolean {
+    val indexOfSetToDefaultPage =
+        pagesToDisplay.indexOfFirst { it.type == OnboardingPageUiData.Type.DEFAULT_BROWSER }
+    val currentPageIsSetToDefaultPage = currentPageIndex == indexOfSetToDefaultPage
+    return isSetToDefault && currentPageIsSetToDefaultPage
 }
 
 @Composable
@@ -302,6 +354,7 @@ private fun OnboardingContent(
 
         Column(
             verticalArrangement = Arrangement.Center,
+            modifier = Modifier.systemBarsPadding(),
         ) {
             Spacer(Modifier.weight(1f)).takeIf { !layout.isSmall }
 
@@ -336,6 +389,7 @@ private fun OnboardingContent(
                     onCustomizeToolbarButtonClick = onCustomizeToolbarButtonClick,
                     onTermsOfServiceButtonClick = onAgreeAndConfirmTermsOfService,
                     shouldShowElevation = !layout.isSmall,
+                    isSmallDevice = layout.isSmall,
                 )
 
                 OnboardingPageForType(
@@ -346,7 +400,6 @@ private fun OnboardingContent(
                     onMarketingDataLearnMoreClick = onMarketingDataLearnMoreClick,
                     onMarketingOptInToggle = onMarketingOptInToggle,
                     onMarketingDataContinueClick = onMarketingDataContinueClick,
-                    isSmallDevice = layout.isSmall,
                 )
             }
 
@@ -396,14 +449,13 @@ private fun OnboardingPageForType(
     onMarketingDataLearnMoreClick: () -> Unit,
     onMarketingOptInToggle: (optIn: Boolean) -> Unit,
     onMarketingDataContinueClick: (allowMarketingDataCollection: Boolean) -> Unit,
-    isSmallDevice: Boolean,
 ) {
     when (type) {
         OnboardingPageUiData.Type.DEFAULT_BROWSER,
         OnboardingPageUiData.Type.SYNC_SIGN_IN,
         OnboardingPageUiData.Type.ADD_SEARCH_WIDGET,
         OnboardingPageUiData.Type.NOTIFICATION_PERMISSION,
-            -> OnboardingPageRedesign(state, isSmallDevice)
+            -> OnboardingPageRedesign(state)
 
         OnboardingPageUiData.Type.TOOLBAR_PLACEMENT -> {
             val context = LocalContext.current
@@ -434,7 +486,6 @@ private fun OnboardingPageForType(
         OnboardingPageUiData.Type.TERMS_OF_SERVICE -> TermsOfServiceOnboardingPageRedesign(
             state,
             termsOfServiceEventHandler,
-            isSmallDevice = isSmallDevice,
         )
 
         // no-ops

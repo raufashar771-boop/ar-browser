@@ -17,6 +17,7 @@ import org.mozilla.fenix.BuildConfig
 import org.mozilla.fenix.Config
 import org.mozilla.fenix.GleanMetrics.AdjustAttribution
 import org.mozilla.fenix.GleanMetrics.Pings
+import org.mozilla.fenix.distributions.DistributionAdjustStartupStrategy
 import org.mozilla.fenix.ext.components
 import org.mozilla.fenix.utils.Settings
 
@@ -38,6 +39,25 @@ class AdjustMetricsService(private val application: Application) : MetricsServic
     override fun shouldTrack(event: Event): Boolean = false
 
     companion object {
+        const val META_PARTNER_ID = "34"
+
+        private fun enableOnlyMetaThirdPartySharing() {
+            Adjust.trackThirdPartySharing(
+                AdjustThirdPartySharing(true).apply {
+                    addPartnerSharingSetting("all", "all", false)
+                    addPartnerSharingSetting(META_PARTNER_ID, "all", true)
+                },
+            )
+        }
+
+        private fun disableMetaThirdPartySharing() {
+            Adjust.trackThirdPartySharing(
+                AdjustThirdPartySharing(true).apply {
+                    addPartnerSharingSetting(META_PARTNER_ID, "all", false)
+                },
+            )
+        }
+
         @VisibleForTesting
         internal fun alreadyKnown(settings: Settings): Boolean {
             return settings.adjustCampaignId.isNotEmpty() || settings.adjustNetwork.isNotEmpty() ||

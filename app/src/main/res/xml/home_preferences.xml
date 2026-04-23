@@ -39,19 +39,23 @@
         android:key="@string/pref_key_show_top_recent_sites"
         android:title="@string/preferences_show_top_recent_sites" />
 
-    <androidx.preference.SwitchPreference
+    <androidx.preference.SwitchPreferenceCompat
+        android:key="@string/pref_key_privacy_report"
+        android:title="@string/customize_toggle_privacy_report" />
+
+    <androidx.preference.SwitchPreferenceCompat
         android:key="@string/pref_key_recent_tabs"
         android:title="@string/customize_toggle_jump_back_in" />
 
-    <androidx.preference.SwitchPreference
+    <androidx.preference.SwitchPreferenceCompat
         android:key="@string/pref_key_customization_bookmarks"
         android:title="@string/customize_toggle_bookmarks" />
 
-    <androidx.preference.SwitchPreference
+    <androidx.preference.SwitchPreferenceCompat
         android:key="@string/pref_key_history_metadata_feature"
         android:title="@string/customize_toggle_recently_visited" />
 
-    <androidx.preference.SwitchPreference
+    <androidx.preference.SwitchPreferenceCompat
         android:key="@string/pref_key_pocket_homescreen_recommendations"
         android:title="@string/customize_toggle_pocket_3" />
 
