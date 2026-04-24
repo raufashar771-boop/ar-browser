@@ -836,7 +836,13 @@ class BrowserToolbarMiddleware(
     private fun openNewTab(
         browsingMode: BrowsingMode,
     ) {
-        if (settings.enableHomepageAsNewTab) {
+        if (!settings.shouldUseDefaultHomepage) {
+            useCases.fenixBrowserUseCases.loadUrlOrSearch(
+                searchTermOrURL = settings.customHomepageUrl,
+                newTab = true,
+                private = browsingMode.isPrivate
+            )
+        } else if (settings.enableHomepageAsNewTab) {
             useCases.fenixBrowserUseCases.addNewHomepageTab(
                 private = browsingMode.isPrivate,
             )

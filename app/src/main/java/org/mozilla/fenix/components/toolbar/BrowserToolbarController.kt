@@ -223,25 +223,21 @@ class DefaultBrowserToolbarController(
             Toolbar.ButtonTappedExtra(source = SOURCE_ADDRESS_BAR, item = ACTION_HOME_CLICKED),
         )
 
-        if (settings.enableHomepageAsNewTab) {
+        if (!settings.shouldUseDefaultHomepage) {
+            tabsUseCases.addTab(
+                settings.customHomepageUrl,
+                selectTab = true,
+                startLoading = true,
+                parentId = null,
+                contextId = null,
+                private = appStore.state.mode.isPrivate,
+            )
+        } else if (settings.enableHomepageAsNewTab) {
             fenixBrowserUseCases.navigateToHomepage()
         } else {
-            browserAnimator.captureEngineViewAndDrawStatically {
-                if (settings.shouldUseDefaultHomepage) {
-                    navController.navigate(
-                        BrowserFragmentDirections.actionGlobalHome(),
-                    )
-                } else {
-                    tabsUseCases.addTab(
-                        settings.customHomepageUrl,
-                        selectTab = true,
-                        startLoading = true,
-                        parentId = null,
-                        contextId = null,
-                        private = appStore.state.mode.isPrivate,
-                    )
-                }
-            }
+            navController.navigate(
+                BrowserFragmentDirections.actionGlobalHome(),
+            )
         }
     }
 
