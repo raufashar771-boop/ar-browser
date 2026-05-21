@@ -1844,48 +1844,6 @@
   <!-- Tab group color: Grey -->
   <string name="tab_group_color_grey">灰色</string>
   <!--
-    Tab Group
-
-    Title for the create tab group bottom sheet
-  -->
-  <string name="create_tab_group_title">创建标签页群组</string>
-  <!-- Title for the edit tab group bottom sheet -->
-  <string name="edit_tab_group_title">编辑群组</string>
-  <string name="create_tab_group_save_button">保存</string>
-  <string name="edit_tab_group_bottom_sheet_close_content_description">关闭“编辑标签页群组”</string>
-  <!-- Default tab group name when creating a tab group -->
-  <string name="create_tab_group_default_name" tools:ignore="UnusedResources" moz:removedIn="150">群组</string>
-  <!--
-    Default tab group name when creating a tab group
-    %d is the number of existing tab groups + 1.
-  -->
-  <string name="create_tab_group_form_default_name">群组“%d”</string>
-  <!-- Label for the tab group name field in the bottom sheet to create or edit a tab group. -->
-  <string name="create_tab_group_name_label">名称</string>
-  <!-- Label for the tab group name field in the bottom sheet to create or edit a tab group. -->
-  <string name="tab_group_name_label" tools:ignore="UnusedResources" moz:removedIn="150">名称</string>
-  <!-- Title for adding more tabs to a tab group. -->
-  <string name="add_to_tab_group_title">添加到</string>
-  <!-- Content Description for closing the "Add to Tab Group" panel. -->
-  <string name="add_to_tab_group_bottom_sheet_close_content_description">关闭“添加到标签页群组”</string>
-  <!-- Label for adding to a new tab group. -->
-  <string name="add_to_new_tab_group_title">新建标签页群组</string>
-  <plurals name="tab_group_tabs_count_subtitle">
-    <!--
-      Subtitle for the number of tabs in a tab group.
-      %1$d is the number of tabs in a tab group.
-    -->
-    <item quantity="other">%1$d 个标签页</item>
-  </plurals>
-  <!-- Title for the Delete tab group confirmation dialog. -->
-  <string name="delete_tab_group_confirmation_dialog_title">删除标签页群组？</string>
-  <!-- Text shown in the body of the Delete tab group confirmation dialog. -->
-  <string name="delete_tab_group_confirmation_dialog_body">将永久删除此群组。</string>
-  <!-- Text shown on the confirm button in the Delete tab group confirmation dialog. -->
-  <string name="delete_tab_group_confirmation_dialog_confirm">删除群组</string>
-  <!-- Text shown on the cancel button in the Delete tab group confirmation dialog. -->
-  <string name="delete_tab_group_confirmation_dialog_cancel">取消</string>
-  <!--
     History
 
     Text for the button to search all history

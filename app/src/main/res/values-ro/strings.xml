@@ -1828,50 +1828,6 @@
   <!-- Tab group color: Grey -->
   <string name="tab_group_color_grey">Gri</string>
   <!--
-    Tab Group
-
-    Title for the create tab group bottom sheet
-  -->
-  <string name="create_tab_group_title">Creează un grup de file</string>
-  <!-- Title for the edit tab group bottom sheet -->
-  <string name="edit_tab_group_title">Editează grupul</string>
-  <string name="create_tab_group_save_button">Salvează</string>
-  <string name="edit_tab_group_bottom_sheet_close_content_description">Închide Modifică grupul de file</string>
-  <!-- Default tab group name when creating a tab group -->
-  <string name="create_tab_group_default_name" tools:ignore="UnusedResources" moz:removedIn="150">Grup</string>
-  <!--
-    Default tab group name when creating a tab group
-    %d is the number of existing tab groups + 1.
-  -->
-  <string name="create_tab_group_form_default_name">Grup %d</string>
-  <!-- Label for the tab group name field in the bottom sheet to create or edit a tab group. -->
-  <string name="create_tab_group_name_label">Nume</string>
-  <!-- Label for the tab group name field in the bottom sheet to create or edit a tab group. -->
-  <string name="tab_group_name_label" tools:ignore="UnusedResources" moz:removedIn="150">Nume</string>
-  <!-- Title for adding more tabs to a tab group. -->
-  <string name="add_to_tab_group_title">Adaugă în</string>
-  <!-- Content Description for closing the "Add to Tab Group" panel. -->
-  <string name="add_to_tab_group_bottom_sheet_close_content_description">Închide Adaugă în grupul de file</string>
-  <!-- Label for adding to a new tab group. -->
-  <string name="add_to_new_tab_group_title">Grup nou de file</string>
-  <plurals name="tab_group_tabs_count_subtitle">
-    <!--
-      Subtitle for the number of tabs in a tab group.
-      %1$d is the number of tabs in a tab group.
-    -->
-    <item quantity="one">%1$d filă</item>
-    <item quantity="few">%1$d file</item>
-    <item quantity="other">%1$d de file</item>
-  </plurals>
-  <!-- Title for the Delete tab group confirmation dialog. -->
-  <string name="delete_tab_group_confirmation_dialog_title">Ștergi grupul de file?</string>
-  <!-- Text shown in the body of the Delete tab group confirmation dialog. -->
-  <string name="delete_tab_group_confirmation_dialog_body">Grupul va fi șters permanent.</string>
-  <!-- Text shown on the confirm button in the Delete tab group confirmation dialog. -->
-  <string name="delete_tab_group_confirmation_dialog_confirm">Șterge grupul</string>
-  <!-- Text shown on the cancel button in the Delete tab group confirmation dialog. -->
-  <string name="delete_tab_group_confirmation_dialog_cancel">Anulează</string>
-  <!--
     History
 
     Text for the button to search all history

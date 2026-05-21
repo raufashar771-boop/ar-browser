@@ -55,7 +55,7 @@ body:
     attributes:
       label: Iceraven version
       description: You can find this information in Settings -> About Iceraven.
-      placeholder: 2.22.0
+      placeholder: 2.22.0 arm64-v8a
     validations:
       required: true
   - type: textarea

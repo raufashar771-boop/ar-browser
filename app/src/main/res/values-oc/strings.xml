@@ -816,8 +816,6 @@
   <!-- Summary for the setting to automatically clean up downloaded files -->
   <string name="preferences_downloads_settings_clean_up_files_summary">Suprimir los fichièrs dels gestionari de telecargament los suprimís tanben de l’aparelh</string>
   <!-- Preference for downloads -->
-  <string name="preferences_downloads_2">Paramètres de telecargament</string>
-  <!-- Preference for downloads -->
   <string name="preferences_downloads">Telecargaments</string>
   <!-- Preference for enabling gecko engine logs -->
   <string name="preferences_enable_gecko_logs">Activar los jornals Gecko</string>
