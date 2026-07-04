@@ -13,7 +13,6 @@ buildscript {
         classpath libs.android.gradle.plugin
         classpath libs.androidx.benchmark.gradle
         classpath libs.androidx.navigation.safeargs
-        classpath libs.mozilla.glean.gradle.plugin
         classpath libs.osslicenses.plugin
 
         // NOTE: Do not place your application dependencies here; they belong

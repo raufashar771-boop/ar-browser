@@ -61,7 +61,7 @@ android {
             arg("room.schemaLocation", "$projectDir/schemas".toString())
         }
 
-        applicationId "io.github.forkmaintainers"
+        applicationId "com.ar.browser"
         minSdk config.minSdkVersion
         targetSdk config.targetSdkVersion
         versionCode 1
@@ -81,7 +81,7 @@ android {
         // This should be the base URL used to call the AMO API.
         buildConfigField "String", "AMO_SERVER_URL", "\"https://services.addons.mozilla.org\""
 
-        def deepLinkSchemeValue = "fenix-dev"
+        def deepLinkSchemeValue = "ar-dev"
         buildConfigField "String", "DEEP_LINK_SCHEME", "\"$deepLinkSchemeValue\""
 
         manifestPlaceholders = [
@@ -123,7 +123,7 @@ android {
         debug {
             shrinkResources = false
             minifyEnabled = false
-            applicationIdSuffix ".fenix.debug"
+            applicationIdSuffix ".ar.debug"
             resValue "bool", "IS_DEBUG", "true"
             pseudoLocalesEnabled = true
         }
@@ -174,15 +174,15 @@ android {
             isDefault true
             shrinkResources false
             minifyEnabled false
-            applicationIdSuffix ".iceraven.debug"
+            applicationIdSuffix ".ar.debug"
             pseudoLocalesEnabled true
             // Need to replicate default debug config features
             signingConfig signingConfigs.debug
             debuggable true
-            def deepLinkSchemeValue = "iceraven-debug"
+            def deepLinkSchemeValue = "ar-debug"
             buildConfigField "String", "DEEP_LINK_SCHEME", "\"$deepLinkSchemeValue\""
             manifestPlaceholders.putAll([
-                    "sharedUserId": "io.github.forkmaintainers.iceraven.sharedID",
+                    "sharedUserId": "com.ar.browser.sharedID",
                     "deepLinkScheme": deepLinkSchemeValue,
             ])
             // Use custom default allowed addon list
@@ -193,11 +193,11 @@ android {
         }
         forkRelease releaseTemplate >> {
             buildConfigField "boolean", "USE_RELEASE_VERSIONING", "true"
-            applicationIdSuffix ".iceraven"
-            def deepLinkSchemeValue = "iceraven"
+            applicationIdSuffix ".ar"
+            def deepLinkSchemeValue = "ar"
             buildConfigField "String", "DEEP_LINK_SCHEME", "\"$deepLinkSchemeValue\""
             manifestPlaceholders.putAll([
-                    "sharedUserId": "io.github.forkmaintainers.iceraven.sharedID",
+                    "sharedUserId": "com.ar.browser.sharedID",
                     "deepLinkScheme": deepLinkSchemeValue,
             ])
             // Use custom default allowed addon list
@@ -536,11 +536,7 @@ android.applicationVariants.configureEach { variant ->
 // Generate Kotlin code for the Fenix Glean metrics.
 ext {
     // Enable expiration by major version.
-    gleanExpireByVersion = Config.majorVersion(project)
-    gleanNamespace = "mozilla.telemetry.glean"
-    // gleanPythonEnvDir = gradle.mozconfig.substs.GRADLE_GLEAN_PARSER_VENV
 }
-apply plugin: "org.mozilla.telemetry.glean-gradle-plugin"
 
 nimbus {
     // The path to the Nimbus feature manifest file

@@ -2,7 +2,7 @@ import groovy.json.JsonSlurper
 
 def slurper = new JsonSlurper()
 
-def projectRootDir = System.getProperty("user.dir")
+def projectRootDir = gradle.ext.projectRootDir ?: System.getProperty("user.dir")
 
 def json = slurper.parse(new File("${projectRootDir}/mozconfig.json"))
 
@@ -11,10 +11,12 @@ gradle.ext.mozconfig.substs.MOZ_APP_VERSION = file("${projectRootDir}/version.tx
 gradle.ext.mozconfig.substs.MOZ_ANDROID_FAT_AAR_ARCHITECTURES = true
 gradle.ext.mozconfig.substs.MOZ_UPDATE_CHANNEL = 'release'
 gradle.ext.mozconfig.substs.ALLOW_INSECURE_GRADLE_REPOSITORIES = true
-gradle.ext.mozconfig.substs.ANDROID_BUILD_TOOLS_VERSION = "36.0.0" // build/moz.configure/android-sdk.configure#L140
+gradle.ext.mozconfig.substs.ANDROID_BUILD_TOOLS_VERSION = "36.0.0"
+gradle.ext.mozconfig.substs.ANDROID_NDK_MAJOR_VERSION = "27"
+gradle.ext.mozconfig.substs.ANDROID_NDK_MINOR_VERSION = "0"
 gradle.ext.mozconfig.substs.NIMBUS_FML = "${projectRootDir}/dist/host/bin/nimbus-fml"
-gradle.ext.mozconfig.topsrcdir = System.getProperty("user.dir")
-gradle.ext.mozconfig.topobjdir = System.getProperty("user.dir")
+gradle.ext.mozconfig.topsrcdir = projectRootDir
+gradle.ext.mozconfig.topobjdir = projectRootDir
 
 gradle.startParameter.offline = false
 
