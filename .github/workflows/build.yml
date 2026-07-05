@@ -40,6 +40,11 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Copy libs.versions.toml for android-components submodule
+        run: |
+          mkdir -p android-components/gradle
+          cp gradle/libs.versions.toml android-components/gradle/libs.versions.toml
+
       - name: Override Termux Java path for CI
         run: sed -i '/org.gradle.java.home=/d' gradle.properties
 
