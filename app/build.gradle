@@ -187,7 +187,7 @@ android {
             ])
             // Use custom default allowed addon list
             buildConfigField "String", "AMO_COLLECTION_USER", "\"18187371\""
-            buildConfigField "String", "AMO_COLLECTION_NAME", "\"Iceraven_Addon_Collection\""
+            buildConfigField "String", "AMO_COLLECTION_NAME", "\"AR_Addon_Collection\""
             resValue "bool", "IS_DEBUG", "true"
             matchingFallbacks = ['debug']
         }
@@ -202,7 +202,7 @@ android {
             ])
             // Use custom default allowed addon list
             buildConfigField "String", "AMO_COLLECTION_USER", "\"18187371\""
-            buildConfigField "String", "AMO_COLLECTION_NAME", "\"Iceraven_Addon_Collection\""
+            buildConfigField "String", "AMO_COLLECTION_NAME", "\"AR_Addon_Collection\""
         }
         benchmark releaseTemplate >> {
             initWith buildTypes.nightly

@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.platform.LocalContext
 import com.google.android.play.core.review.ReviewManagerFactory
-import io.github.forkmaintainers.iceraven.components.PagedAMOAddonsProvider
+import com.ar.browser.components.PagedAMOAddonsProvider
 import androidx.core.app.NotificationManagerCompat
 import mozilla.components.concept.ai.controls.AIFeatureBlock
 import mozilla.components.concept.ai.controls.AIFeatureRegistry

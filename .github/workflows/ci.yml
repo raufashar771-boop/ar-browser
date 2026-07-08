@@ -37,7 +37,7 @@ jobs:
 
       - name: Relpace strings
         run: |
-          sed -i 's/Firefox/Iceraven/g' app/src/*/res/values*/*strings.xml
+          sed -i 's/Firefox/AR/g' app/src/*/res/values*/*strings.xml
           sed -i '/about_content/s/Mozilla/@forkmaintainers/' app/src/*/res/values*/*strings.xml
           sed -i '/<string name="trackers_blocked_panel_categorical_num_trackers_blocked">/s/%s/%1$s/g; /<string name="trackers_blocked_panel_categorical_num_trackers_blocked">/s/%d/%2$d/g' app/src/*/res/values*/*strings.xml
 
