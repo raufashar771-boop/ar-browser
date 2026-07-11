@@ -12,6 +12,7 @@ buildscript {
 
     dependencies {
         classpath libs.kotlin.serialization
+        classpath libs.mozilla.glean.gradle.plugin
     }
 }
 
@@ -535,8 +536,11 @@ android.applicationVariants.configureEach { variant ->
 
 // Generate Kotlin code for the Fenix Glean metrics.
 ext {
-    // Enable expiration by major version.
+    gleanExpireByVersion = Config.majorVersion(project)
+    gleanNamespace = "mozilla.telemetry.glean"
+    // gleanPythonEnvDir = gradle.mozconfig.substs.GRADLE_GLEAN_PARSER_VENV
 }
+apply plugin: "org.mozilla.telemetry.glean-gradle-plugin"
 
 nimbus {
     // The path to the Nimbus feature manifest file
