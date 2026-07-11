@@ -9,7 +9,7 @@ body:
         - Please do your best to search for duplicate issues before filing a new issue so we can keep our issue board clean.
         - Have a look at ["I want to file an issue!"][info] for more information.
 
-        [info]: https://github.com/fork-maintainers/iceraven-browser#i-want-to-file-an-issue
+        [info]: https://github.com/raufashar771-boop/ar-browser#i-want-to-file-an-issue
   - type: textarea
     attributes:
       label: Steps to reproduce
@@ -53,8 +53,8 @@ body:
       required: true
   - type: input
     attributes:
-      label: Iceraven version
-      description: You can find this information in Settings -> About Iceraven.
+      label: AR Browser version
+      description: You can find this information in Settings -> About AR Browser.
       placeholder: 2.22.0 arm64-v8a
     validations:
       required: true
@@ -64,7 +64,7 @@ body:
       description: |
         Device logs or crash information can greatly aid in debugging. You can find some details here on how to [retrieve device logs or crash IDs][log].
 
-        [log]: https://github.com/fork-maintainers/iceraven-browser/blob/iceraven/docs/Logging-Crash-Information.md
+        [log]: https://github.com/raufashar771-boop/ar-browser/blob/iceraven/docs/Logging-Crash-Information.md
     validations:
       required: false
   - type: textarea

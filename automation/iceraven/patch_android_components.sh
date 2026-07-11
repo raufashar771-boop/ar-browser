@@ -19,9 +19,11 @@ sed -i "s#\.\./\.\./\.\./\.\./\.\./gradle/libs.versions.toml#../../../gradle/lib
 # `gleanNamespace = "mozilla.telemetry.glean"` lines must be removed or the build fails.
 # NOTE: do NOT strip these from service/nimbus -- nimbus Kotlin code references the
 # generated `GleanMetrics`/`Microsurvey` symbols, so the plugin MUST stay applied there.
+# NOTE: also do NOT strip lib/crash -- GleanCrashReporterService.kt references the
+# generated `mozilla.components.lib.crash.GleanMetrics.CrashMetrics`, so the plugin MUST
+# stay applied there too (otherwise compileReleaseKotlin fails with "Unresolved reference").
 GLEAN_FILES=(
   android-components/components/browser/engine-gecko/build.gradle
-  android-components/components/lib/crash/build.gradle
   android-components/samples/glean/build.gradle
   android-components/samples/glean/samples-glean-library/build.gradle
 )
