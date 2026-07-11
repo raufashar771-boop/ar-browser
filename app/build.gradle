@@ -795,7 +795,6 @@ protobuf {
     // for more information.
     generateProtoTasks {
         all().each { task ->
-            task.dependsOn('createBuildDir')
             task.builtins {
                 java {
                     option 'lite'
@@ -855,7 +854,6 @@ def safeArgsSrc = layout.buildDirectory
     .map { dir -> fileTree(dir) { include "generateSafeArgs*/**/*.kt" } }
 
 tasks.register("suppressUselessCastInSafeArgs") {
-    dependsOn('createBuildDir')
     inputs.files(safeArgsSrc)
     outputs.upToDateWhen { false }
 

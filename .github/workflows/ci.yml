@@ -25,14 +25,22 @@ jobs:
       - name: Generate ephemeral debug signing key
         run: |
           mkdir -p ~/.android
-          echo "${{ secrets.DEBUG_KEYSTORE_B64 }}" | base64 -d > ~/.android/ar-release.keystore || true
-          if [ ! -s ~/.android/ar-release.keystore ]; then
-            keytool -genkeypair -v -keystore ~/.android/ar-release.keystore \
+          KEYSTORE=~/.android/ar-release.keystore
+          # Only seed the keystore from the secret when it actually contains data.
+          # Writing an empty secret yields a 0-byte file that makes `keytool` refuse
+          # to generate a key ("Keystore file exists, but is empty").
+          if [ -n "${{ secrets.DEBUG_KEYSTORE_B64 }}" ]; then
+            echo "${{ secrets.DEBUG_KEYSTORE_B64 }}" | base64 -d > "$KEYSTORE"
+          fi
+          # Remove any leftover empty file so keytool can create a fresh one.
+          if [ ! -s "$KEYSTORE" ]; then
+            rm -f "$KEYSTORE"
+            keytool -genkeypair -v -keystore "$KEYSTORE" \
               -alias ar -keyalg RSA -keysize 2048 -validity 10000 \
               -storepass android -keypass android \
               -dname "CN=AR Browser, OU=AR, O=AR, L=Unknown, S=Unknown, C=US"
           fi
-          echo "KEYSTORE_PATH=~/.android/ar-release.keystore" >> $GITHUB_ENV
+          echo "KEYSTORE_PATH=$KEYSTORE" >> $GITHUB_ENV
           echo "KEY_ALIAS=ar" >> $GITHUB_ENV
           echo "KEYSTORE_PASS=android" >> $GITHUB_ENV
           echo "KEY_PASS=android" >> $GITHUB_ENV
