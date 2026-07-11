@@ -14,6 +14,25 @@ done
 sed -i "s#gleanPythonEnvDir#// gleanPythonEnvDir#g" android-components/**/*.gradle
 sed -i "s#\.\./\.\./\.\./\.\./\.\./gradle/libs.versions.toml#../../../gradle/libs.versions.toml#g" android-components/**/*.gradle
 
+# De-telemetry: the Glean gradle plugin is no longer on the build classpath, so the
+# `apply plugin: "org.mozilla.telemetry.glean-gradle-plugin"` lines and the
+# `gleanNamespace = "mozilla.telemetry.glean"` lines must be removed or the build fails.
+GLEAN_FILES=(
+  android-components/components/browser/engine-gecko/build.gradle
+  android-components/components/lib/crash/build.gradle
+  android-components/components/service/nimbus/build.gradle
+  android-components/samples/glean/build.gradle
+  android-components/samples/glean/samples-glean-library/build.gradle
+)
+for f in "${GLEAN_FILES[@]}"; do
+  [ -f "$f" ] || continue
+  sed -i '/apply plugin: "org.mozilla.telemetry.glean-gradle-plugin"/d' "$f"
+  sed -i '/gleanNamespace = "mozilla.telemetry.glean"/d' "$f"
+done
+
+# Some library modules have no `release` publishing component; guard against that.
+sed -i 's#from components.release#from components.findByName("release")#g' android-components/publish.gradle
+
 sed -i 's#mobile/android/version.txt#version.txt#g' android-components/plugins/config/src/main/java/ConfigPlugin.kt
 sed -i 's#mobile/android/##g' android-components/components/lib/crash/build.gradle
 

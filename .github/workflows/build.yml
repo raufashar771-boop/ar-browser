@@ -48,6 +48,13 @@ jobs:
       - name: Override Termux Java path for CI
         run: sed -i '/org.gradle.java.home=/d' gradle.properties
 
+      # The submodule imports the version catalog via a path that points OUTSIDE the
+      # checkout (e.g. ../../../../../gradle/libs.versions.toml). patch_android_components.sh
+      # rewrites those imports to ../../../gradle (where we copied the catalog above) and
+      # strips the now-missing Glean plugin. Without this, the build fails at settings eval.
+      - name: Patch android-components imports
+        run: ./automation/iceraven/patch_android_components.sh
+
       - name: Build debug APK
         run: ./gradlew app:assembleDebug --no-daemon --stacktrace
 
