@@ -129,9 +129,9 @@ android {
             pseudoLocalesEnabled = true
         }
         nightly releaseTemplate >> {
-            applicationIdSuffix ".fenix"
+            applicationIdSuffix ".ar.nightly"
             buildConfigField "boolean", "USE_RELEASE_VERSIONING", "true"
-            def deepLinkSchemeValue = "fenix-nightly"
+            def deepLinkSchemeValue = "ar-nightly"
             buildConfigField "String", "DEEP_LINK_SCHEME", "\"$deepLinkSchemeValue\""
             manifestPlaceholders.putAll([
                     "deepLinkScheme": deepLinkSchemeValue
@@ -139,8 +139,8 @@ android {
         }
         beta releaseTemplate >> {
             buildConfigField "boolean", "USE_RELEASE_VERSIONING", "true"
-            applicationIdSuffix ".firefox_beta"
-            def deepLinkSchemeValue = "fenix-beta"
+            applicationIdSuffix ".ar.beta"
+            def deepLinkSchemeValue = "ar-beta"
             buildConfigField "String", "DEEP_LINK_SCHEME", "\"$deepLinkSchemeValue\""
             manifestPlaceholders.putAll([
                     // This release type is meant to replace Firefox (Beta channel) and therefore needs to inherit
@@ -150,14 +150,14 @@ android {
                     // fatal consequences. For example see:
                     //  - https://issuetracker.google.com/issues/36924841
                     //  - https://issuetracker.google.com/issues/36905922
-                    "sharedUserId": "org.mozilla.firefox.sharedID",
+                    "sharedUserId": "com.ar.browser.sharedID",
                     "deepLinkScheme": deepLinkSchemeValue,
             ])
         }
         release releaseTemplate >> {
             buildConfigField "boolean", "USE_RELEASE_VERSIONING", "true"
-            applicationIdSuffix ".firefox"
-            def deepLinkSchemeValue = "fenix"
+            applicationIdSuffix ".ar.release"
+            def deepLinkSchemeValue = "ar-release"
             buildConfigField "String", "DEEP_LINK_SCHEME", "\"$deepLinkSchemeValue\""
             manifestPlaceholders.putAll([
                     // This release type is meant to replace Firefox (Release channel) and therefore needs to inherit
@@ -167,7 +167,7 @@ android {
                     // fatal consequences. For example see:
                     //  - https://issuetracker.google.com/issues/36924841
                     //  - https://issuetracker.google.com/issues/36905922
-                    "sharedUserId": "org.mozilla.firefox.sharedID",
+                    "sharedUserId": "com.ar.browser.sharedID",
                     "deepLinkScheme": deepLinkSchemeValue,
             ])
         }
@@ -209,7 +209,7 @@ android {
             initWith buildTypes.nightly
             shrinkResources = false
             minifyEnabled = false
-            applicationIdSuffix ".fenix"
+            applicationIdSuffix ".ar.benchmark"
             signingConfig = signingConfigs.debug
             debuggable false
             buildConfigField "boolean", "IS_BENCHMARK_BUILD", "true"
