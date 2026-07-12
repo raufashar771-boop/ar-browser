@@ -28,6 +28,13 @@ android {
     }
 }
 
+// longfox's build dir is nested under :app's build dir, so every longfox task
+// implicitly depends on :app:createBuildDir. Gradle 9.x rejects the implicit
+// dependency as a validation error; declare it explicitly (lazy path form).
+tasks.configureEach { task ->
+    task.dependsOn(':app:createBuildDir')
+}
+
 dependencies {
     implementation libs.androidx.activity.compose
     implementation libs.androidx.appcompat
